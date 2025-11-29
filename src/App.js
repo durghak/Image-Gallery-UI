@@ -1,12 +1,21 @@
-import Login from './components/Login/Login';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SignIn from './components/Login/SignIn';
+import Register from './components/Login/register';
+import Gallery from "./components/Gallery/Gallery"; 
+import Login from "./components/Login/Login";
 
 
-function App(){
+function App() {
   return (
-    <>
-      <Login />
-    </>
-  )
+    //  <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+
+        <Route path="/gallery" element={<Gallery />} />
+      </Routes>
+      // </BrowserRouter>
+    
+  );
 }
 
 export default App;

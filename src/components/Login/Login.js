@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import SignIn from './SignIn';
 import Register from './register';  
 import image from '../../photos/image.png';
+      
 
 
 const Login = () => {

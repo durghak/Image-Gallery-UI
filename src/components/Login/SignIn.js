@@ -1,28 +1,39 @@
 import { useState } from "react";
-import {Button,Typography,TextField,Box} from '@mui/material';
+import {Button,Typography,TextField,Box,Snackbar,Alert} from '@mui/material';
+import Gallery from "../Gallery/Gallery"; 
+import { useNavigate } from "react-router-dom";
+
 
 const SignIn = ({ setShowRegistration }) => {
     const[username, setUsername] = useState("");
     const[password, setPassword] = useState("");
-     const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form action
-    console.log("Username:", username);
-    console.log("Password:", password);
-    const formData = {
-      "username": username,
-   "password": password
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const navigate = useNavigate();
+
+    const handleSubmit =  (e) => 
+{e.preventDefault();
+    if (!username || !password) {
+  alert("Username and password are required");
+  return;
 }
     
-    fetch('http://localhost:5000/login', {
-      method: 'POST',
-      headers: {
-    'Content-Type': 'application/json', // Important!
-  },
-      body: JSON.stringify(formData),
-    })
+   const formData = {username, password};
+    fetch("http://localhost:5000/login", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  credentials: "include",
+  body: JSON.stringify({ username, password })
+})
+    
     .then(response => response.json())
     .then(data => {
-      console.log('Success:', data);
+      console.log('Success:', data.user_id);
+      localStorage.setItem("user_id", data.user_id);
+      setOpenSnackbar(true); // Show success message
+        setUsername("");
+        setPassword("");
+        
+        navigate("/gallery");
       // Handle successful response
     })
     .catch(error => {
@@ -30,11 +41,11 @@ const SignIn = ({ setShowRegistration }) => {
       // Handle errors
     });
   }
+
     return (
        
      <Box
-      component="form"
-      onSubmit={handleSubmit}
+      
       sx={{
         height: "100vh",
         display: "flex",
@@ -55,6 +66,7 @@ const SignIn = ({ setShowRegistration }) => {
         label="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+         required
       />
 
       <TextField
@@ -64,11 +76,18 @@ const SignIn = ({ setShowRegistration }) => {
         autoComplete="current-password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+         required
       />
         <Button variant="contained" onClick={handleSubmit}>Submit</Button>
             <Typography sx={{ mt: 2 }}>
              New User? <a href="#" onClick={() => setShowRegistration(true)}>Register here</a>
             </Typography>
+            {/* Snackbar */}
+                  <Snackbar open={openSnackbar} autoHideDuration={3000} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+                    <Alert severity="success" variant="filled" >
+                      Login Successfully!
+                    </Alert>
+                  </Snackbar>
         </Box>  
         
        
