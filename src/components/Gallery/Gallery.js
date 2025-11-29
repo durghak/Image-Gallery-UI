@@ -103,8 +103,8 @@ export default function Gallery() {
           <h2>Created Folders:</h2>
           <Stack spacing={2}>
             {folders.length > 0 ? (
-              folders.map((folder) => (
-                 <IndividualFolders folder={folder} fetchFolders={fetchFolders} />
+              folders.map((folder,index) => (
+                 <IndividualFolders key={index} folder={folder} fetchFolders={fetchFolders} />
               ))
             ) : (
               <p>No folders created yet.</p>

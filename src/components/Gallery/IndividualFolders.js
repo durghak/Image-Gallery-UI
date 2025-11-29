@@ -5,6 +5,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import { Popover, Stack } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 
 
 import SnackbarComp from '../Utils/Snackbar';
@@ -15,7 +17,8 @@ const IndividualFolders = ({folder, fetchFolders}) => {
 const [anchorEl, setAnchorEl] = useState(null);
 const [opens, setOpens] = useState(false);
 const openpopover = Boolean(anchorEl);
-
+const [editMode, setEditMode] = useState(false);
+const[message,setMessage]=useState("");
 const [openSnackbar, setOpenSnackbar] = useState(false);
 
 const handleRightClick = (event) => {
@@ -39,7 +42,9 @@ console.log("Delete folder with ID:", data);
 
 if (data.message === "Folder deleted successfully") {
 setOpens(false);
-setOpenSnackbar(true);  // Show snackbar
+setMessage("Folder deleted successfully!");
+setOpenSnackbar(true);
+  // Show snackbar
 setTimeout(() => { fetchFolders() }, 3000);  // Re-show buttons after snackbar disappears       // Refresh folder list
 }
 
@@ -48,32 +53,58 @@ console.error("An error occurred while fetching folders:", error);
 }
 };
 
-const editFolder = async (folderId, newName) => {
-try {
-const response = await fetch("http://localhost:5000/folders/edit/" + folderId, {  
-method: "PATCH", 
-headers: {
-"Content-Type": "application/json",
-},
-body: JSON.stringify({ name: newName }), 
-});   
-const data = await response.json();
-if (data.message === "Folder updated successfully") {
-fetchFolders(); // Refresh folder list
-} else {
-console.error("Failed to update folder:", data.error);
-}   
-} catch (error) {
-console.error("An error occurred while updating the folder:", error);
-}
-} ;
+const editFolder=async (folderid, newFolderName)=>{
+    try{
+        const response = await fetch("http://localhost:5000/folders/edit/" + folderid, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body:JSON.stringify({ new_name: newFolderName })
+        });
 
+        const data = await response.json();
+        console.log("Edit folder with ID:", data);
+        if (data.message === "Folder name updated successfully") {
+            setOpens(false);
+            setMessage("Folder name updated successfully!");
+            setOpenSnackbar(true);  
+            setTimeout(() => { fetchFolders() }, 3000);            
+        }
+       
+}
+catch (error) {
+      console.error("An error occurred:", error);
+      alert("An error occurred while connecting to the server.");
+    }
+}
+    const handleEditFolder = () => {
+    setEditMode(true);
+    setAnchorEl(null);
+}
+
+const handleEditNameChange = (event) => {
+      if (event.key === 'Enter') {
+        console.log("Enter key pressed!",event.target.value);  
+        editFolder(folder.id, event.target.value);
+        setEditMode(false);      
+      }
+    };
 
 return (
 <>
 <Stack direction="row" spacing={1}  alignItems="center" style={{cursor: "pointer"}} onContextMenu={handleRightClick} >
 <FolderIcon sx={{ color: "green" , fontSize: 40  }}  />
-<span>{folder.name}</span>
+{editMode ?<TextField
+  hiddenLabel
+  id="filled-hidden-label-small"
+  defaultValue={folder.name}
+  variant="filled"
+  size="small"
+  onKeyDown={handleEditNameChange}
+  
+/>
+ :<Typography>{folder.name}</Typography>}
 </Stack>
 
 <Popover
@@ -89,7 +120,7 @@ horizontal: 'left',
 <IconButton aria-label="delete"  color="error">
 <DeleteIcon onClick={ () => {setOpens(true); setAnchorEl(null);}}/>
 </IconButton>
-<IconButton aria-label="edit"  color="primary">
+<IconButton aria-label="edit"  color="primary" onClick={handleEditFolder}>
 <EditIcon />
 </IconButton>
 </Popover>
@@ -99,7 +130,7 @@ horizontal: 'left',
 openSnackbar={openSnackbar}
 handleClose={() => { setOpenSnackbar(false);}}
 severity="success"
-message="Folder deleted successfully!"
+message={message}
 />
 
 </> 
