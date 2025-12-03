@@ -1,5 +1,4 @@
-import { useState } from 'react';
-
+import { useState  } from 'react';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
@@ -7,10 +6,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Popover, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-
-
 import SnackbarComp from '../Utils/Snackbar';
 import ModalComp from '../Utils/Modal';
+import { useNavigate } from 'react-router-dom';
 
 const IndividualFolders = ({folder, fetchFolders}) => {
 
@@ -90,10 +88,11 @@ const handleEditNameChange = (event) => {
         setEditMode(false);      
       }
     };
-
+const navigate=useNavigate()
 return (
 <>
-<Stack direction="row" spacing={1}  alignItems="center" style={{cursor: "pointer"}} onContextMenu={handleRightClick} >
+<Stack direction="row" spacing={1}  alignItems="center" style={{cursor: "pointer"}} onContextMenu={handleRightClick} onClick={()=> {navigate(`/photo/${folder.id}`)}}  >  
+  {/* onClick={() => {window.open(photo,"_blank")}} */}
 <FolderIcon sx={{ color: "green" , fontSize: 40  }}  />
 {editMode ?<TextField
   hiddenLabel

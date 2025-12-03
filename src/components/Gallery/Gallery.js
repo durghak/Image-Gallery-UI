@@ -42,17 +42,17 @@ export default function Gallery() {
       return;
     }
 
-    const folderData = {
-      name: folderName,  // Only send folder name (user_id will be handled by backend)
-    };
+    // const folderData = {
+    //   name: folderName,  // Only send folder name (user_id will be handled by backend)
+    // };
 
     try {
       const response = await fetch("http://localhost:5000/folders/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify(folderData),
+        },  
+        body: JSON.stringify({ name: folderName }),
         credentials: "include",
       });
 
@@ -104,7 +104,7 @@ export default function Gallery() {
           <Stack spacing={2}>
             {folders.length > 0 ? (
               folders.map((folder,index) => (
-                 <IndividualFolders key={index} folder={folder} fetchFolders={fetchFolders} />
+                 <IndividualFolders key={index} folder={folder} fetchFolders={fetchFolders}  />
               ))
             ) : (
               <p>No folders created yet.</p>

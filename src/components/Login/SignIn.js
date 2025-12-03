@@ -17,7 +17,7 @@ const SignIn = ({ setShowRegistration }) => {
   return;
 }
     
-   const formData = {username, password};
+  //  const formData = {username, password};
     fetch("http://localhost:5000/login", {
   method: "POST",
   headers: { "Content-Type": "application/json" },

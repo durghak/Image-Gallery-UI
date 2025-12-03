@@ -3,6 +3,7 @@ import SignIn from './components/Login/SignIn';
 import Register from './components/Login/register';
 import Gallery from "./components/Gallery/Gallery"; 
 import Login from "./components/Login/Login";
+import Photo from "./components/Gallery/Photo";
 
 
 function App() {
@@ -10,8 +11,9 @@ function App() {
     //  <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-
+        
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/photo/:folderid" element={< Photo/>} />
       </Routes>
       // </BrowserRouter>
     
