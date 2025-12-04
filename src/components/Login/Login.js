@@ -11,7 +11,7 @@ const Login = () => {
     return (
         <>
         <ButtonAppBar Name1="Image Gallery"/>
-        <h1 style={{textAlign:'center'}}>Welcome to Photo Gallery</h1>
+        <h1 style={{textAlign:'center'}}>Welcome to Image Gallery</h1>
 <Grid container spacing={2}>
     <Grid size={{ xs: 6}}sx={{height: "100%"}}>
         <img src={image} alt="Gallery" style={{ width: "100%", height: "100%", objectFit: "cover" }}/>

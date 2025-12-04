@@ -12,8 +12,6 @@ export default function Gallery() {
   const [folderName, setFolderName] = useState("");
   const [folders, setFolders] = useState([]);
  
-   
-
    const fetchFolders = async () => {
       try {
         const response = await fetch("http://localhost:5000/folders/get/"+localStorage.getItem("user_id"), {
