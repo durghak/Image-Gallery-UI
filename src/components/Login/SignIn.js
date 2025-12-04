@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {Button,Typography,TextField,Box,Snackbar,Alert} from '@mui/material';
-import Gallery from "../Gallery/Gallery"; 
+
 import { useNavigate } from "react-router-dom";
 
 

@@ -3,13 +3,14 @@ import Grid from '@mui/material/Grid';
 import SignIn from './SignIn';
 import Register from './register';  
 import image from '../../photos/image.png';
-      
+import ButtonAppBar from "../Utils/Appbar";
 
 
 const Login = () => {
     const [showRegistration, setShowRegistration] = useState(false);
     return (
         <>
+        <ButtonAppBar Name1="Image Gallery"/>
         <h1 style={{textAlign:'center'}}>Welcome to Photo Gallery</h1>
 <Grid container spacing={2}>
     <Grid size={{ xs: 6}}sx={{height: "100%"}}>

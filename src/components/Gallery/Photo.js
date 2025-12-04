@@ -1,11 +1,12 @@
-
+import AppBar from '@mui/material/AppBar';
 import {Button,Stack,Box,Popover} from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Input } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
-
+import { useNavigate } from "react-router-dom";
+import ButtonAppBar from "../Utils/Appbar";
 
 
 const Photo=()=>{
@@ -105,11 +106,14 @@ Getphotos();
 console.error("An error occurred while fetching folders:", error);
 }
 };
+const navigate = useNavigate();
+
 
 
 
     return(
         <div>
+          <ButtonAppBar Name1="Image Gallery" Name2="Images" Button1="Back" onButtonClick={() => navigate('/gallery')}  />
         <Box sx={{ width: 500, maxWidth: '100%', margin: 7 }}>
         <Stack direction="row" spacing={2}>
         <Input type = 'file' onChange={handleFileChange}  />
@@ -152,7 +156,7 @@ console.error("An error occurred while fetching folders:", error);
               </Popover>
               
              </Stack>
-
+                     
         </Box>
         </div>
     

@@ -3,8 +3,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useEffect, useState } from "react";
-
 import IndividualFolders from './IndividualFolders';
+import ButtonAppBar from "../Utils/Appbar";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Gallery() {
   const [folderName, setFolderName] = useState("");
@@ -75,9 +77,32 @@ export default function Gallery() {
     // Clear the folder name input after submission
     setFolderName("");
   };
+  const logout=async () => {
+      try {
+        const response = await fetch("http://localhost:5000/logout", {
+          method: "POST",
+          headers: {  
+            "Content-Type": "application/json",
+          },        
+          credentials: "include",
+        }); 
+        if (response.ok) {
+          console.log("Logged out successfully");
+          localStorage.removeItem("user_id");
+          navigate("/");
+        } else {
+          console.error("Logout failed");
+        }
+      } catch (error) {
+        console.error("An error occurred during logout:", error);
+      }
 
+
+  } 
+const navigate = useNavigate();
   return (
     <div>
+      <ButtonAppBar Name1="Image Gallery" Name2="Gallery" Button1="Logout" onButtonClick={logout} />
       <Box sx={{ width: 500, maxWidth: '100%', margin: 4 }}>
         <h1>Gallery</h1>
         <Stack direction="row" spacing={1}>
