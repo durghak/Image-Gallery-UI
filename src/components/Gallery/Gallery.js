@@ -61,6 +61,8 @@ export default function Gallery() {
       if (response.ok) {
         // Folder creation succeeded, update the state
         fetchFolders();  // Refresh the folder list
+        // console.log(result.message);  // Folder created successfully
+        console.log("Folder created successfully");
         // console.log(result.message);  // Folder created successfully?
       } else {
         // Handle error if folder creation failed
